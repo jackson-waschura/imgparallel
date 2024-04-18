@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools >= 61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "imgparallel"
+version = "0.1"
+dependencies = [
+    "",
+    "",
+    ""
+]
+requires-python = ">= 3.8"
+authors = [
+  {name = "Jackson Waschura", email = "jackson.waschura@gmail.com"},
+]
+description = "A toolbox for pre-processing and formatting image datasets."
+readme = "README.md"
+license = {file = "LICENSE"}
+keywords = ["image", "parallel", "data", "processing"]
+classifiers = [
+  "Development Status :: 2 - Pre-Alpha",
+  "Intended Audience :: Developers",
+  "Topic :: Scientific/Engineering :: Image Processing",
+  "License :: OSI Approved :: Apache Software License",
+
+  # Specify the Python versions you support here.
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+]
+
+[project.optional-dependencies]
+dev = [
+    "black"
+]
+
+[project.urls]
+Repository = "https://github.com/jackson-waschura/imgparallel.git"
+
+[tool.black]
+line-length = 100
+include = '\.pyi?$'
