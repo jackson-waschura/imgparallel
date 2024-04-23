@@ -6,9 +6,8 @@ build-backend = "setuptools.build_meta"
 name = "imgparallel"
 version = "0.1"
 dependencies = [
-    "",
-    "",
-    ""
+    "opencv-python",
+    "numpy",
 ]
 requires-python = ">= 3.8"
 authors = [
@@ -34,12 +33,25 @@ classifiers = [
 
 [project.optional-dependencies]
 dev = [
-    "black"
+    "black",
+    "pytest",
 ]
 
 [project.urls]
 Repository = "https://github.com/jackson-waschura/imgparallel.git"
 
+
+[project.scripts]
+imgparallel = "imgparallel.cli:main"
+
 [tool.black]
 line-length = 100
 include = '\.pyi?$'
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra"
+testpaths = ["tests"]
+
+[tool.setuptools]
+packages = ["imgparallel"]
