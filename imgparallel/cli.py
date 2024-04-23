@@ -58,17 +58,17 @@ def interpret_resize_args(arg: str) -> Dict[str, Any]:
 
     if arg == "same":
         return {}
-    
+
     dims = arg.split("x")
 
     if len(dims) < 2:
         raise ValueError("Invalid resize argument format. Expected format 'WxH'.")
     elif len(dims) > 2:
         raise ValueError("Invalid resize argument format. Too many dimensions specified.")
-    
+
     width, height = dims
     width, height = int(width), int(height)
-    
+
     return {"width": width, "height": height}
 
 
@@ -90,7 +90,9 @@ def main():
     format_kwargs = interpret_format_args(args.format)
     input_dataset = Dataset(args.src)
     output_dataset = input_dataset.moved_to(args.dst).with_image_format(**format_kwargs)
-    pipeline = Pipeline().read_images(input_dataset).resize(**resize_kwargs).write_images(output_dataset)
+    pipeline = (
+        Pipeline().read_images(input_dataset).resize(**resize_kwargs).write_images(output_dataset)
+    )
     pipeline.run(num_processes_per_stage=args.proc, verbose=args.verbose, dry_run=args.dry_run)
     print("Done!")
 

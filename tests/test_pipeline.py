@@ -9,6 +9,7 @@ import shutil
 from imgparallel.internal.dataset import Dataset
 from imgparallel.internal.pipeline import Pipeline
 
+
 # Fixture setup
 @pytest.fixture
 def temp_dirs():
@@ -20,11 +21,13 @@ def temp_dirs():
     shutil.rmtree(input_dir)
     shutil.rmtree(output_dir)
 
+
 def generate_random_image(width, height):
     """Generate a random image of specified size using OpenCV."""
     # Generate a random array and convert it to a uint8 image
     image = np.random.randint(0, 256, (height, width, 3), dtype=np.uint8)
     return image
+
 
 def test_full_pipeline(temp_dirs):
     input_dir, output_dir, temp_file = temp_dirs
@@ -57,12 +60,17 @@ def test_full_pipeline(temp_dirs):
         rel_path = os.path.relpath(path, input_dir)
         img = cv2.resize(img, (WIDTH_OUT, HEIGHT_OUT))
         cv2.imwrite(temp_file + ".jpg", img)
-        expected_imgs[rel_path] = cv2.imread(temp_file + ".jpg", cv2.IMREAD_UNCHANGED)        
+        expected_imgs[rel_path] = cv2.imread(temp_file + ".jpg", cv2.IMREAD_UNCHANGED)
 
     # Run the actual pipeline
     input_dataset = Dataset(input_dir)
     output_dataset = input_dataset.moved_to(output_dir).with_image_format(name="jpg")
-    pipeline = Pipeline().read_images(input_dataset).resize(width=WIDTH_OUT, height=HEIGHT_OUT).write_images(output_dataset)
+    pipeline = (
+        Pipeline()
+        .read_images(input_dataset)
+        .resize(width=WIDTH_OUT, height=HEIGHT_OUT)
+        .write_images(output_dataset)
+    )
     pipeline.run(num_processes_per_stage=1)
 
     # Compare to the expected output
@@ -75,10 +83,11 @@ def test_full_pipeline(temp_dirs):
         assert processed_img is not None, f"Expected output file {output_path} does not exist."
 
         # Check the image size
-        assert processed_img.shape == expected_img.shape, \
-            f"Image size mismatch for {output_path}: expected {expected_img.shape}, got {processed_img.shape}"
+        assert (
+            processed_img.shape == expected_img.shape
+        ), f"Image size mismatch for {output_path}: expected {expected_img.shape}, got {processed_img.shape}"
 
         # Check if the image content matches
-        np.testing.assert_allclose(processed_img, expected_img), \
-            f"Image data mismatch for {output_path}. Images are not identical."
-
+        np.testing.assert_allclose(
+            processed_img, expected_img
+        ), f"Image data mismatch for {output_path}. Images are not identical."

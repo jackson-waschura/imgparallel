@@ -8,14 +8,15 @@ import tempfile
 from numpy.typing import NDArray
 from typing import Any
 
+
 def read_image_from_path(img_path: str) -> NDArray[Any]:
     """
     Reads an image from the specified path and returns it as a numpy array.
     Raises FileNotFoundError if the image cannot be loaded.
-    
+
     Parameters:
     img_path (str): Path to the image file.
-    
+
     Returns:
     NDArray[Any]: Numpy array representing the loaded image.
     """
@@ -23,6 +24,7 @@ def read_image_from_path(img_path: str) -> NDArray[Any]:
     if img is None:
         raise FileNotFoundError(f"Unable to load the image from the path: {img_path}")
     return img
+
 
 def write_image_to_path(img_path: str, img_data: NDArray[Any]) -> None:
     """
@@ -37,7 +39,7 @@ def write_image_to_path(img_path: str, img_data: NDArray[Any]) -> None:
     - FileNotFoundError: If the specified directory cannot be accessed or created.
     - IOError: If the image write operation fails.
     """
-    
+
     # Ensure the directory exists
     directory = os.path.dirname(img_path)
     if not os.path.exists(directory):
@@ -47,7 +49,10 @@ def write_image_to_path(img_path: str, img_data: NDArray[Any]) -> None:
     result = cv2.imwrite(img_path, img_data)
     if not result:
         # Handle failed write operation
-        raise IOError(f"Failed to write the image to '{img_path}'. Check the image data and file path.")
+        raise IOError(
+            f"Failed to write the image to '{img_path}'. Check the image data and file path."
+        )
+
 
 def check_permissions(test_path):
     try:
@@ -61,7 +66,7 @@ def check_permissions(test_path):
         return False
     finally:
         # Clean up
-        if 'temp_file' in locals():
+        if "temp_file" in locals():
             os.unlink(temp_file[1])  # Remove the file created
-        if 'temp_dir' in locals():
+        if "temp_dir" in locals():
             os.rmdir(temp_dir)  # Remove the temporary directory
