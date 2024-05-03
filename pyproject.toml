@@ -1,10 +1,10 @@
 [build-system]
-requires = ["setuptools >= 61.0"]
+requires = ["setuptools >= 61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "imgparallel"
-version = "0.1"
+version = "0.1.0"
 dependencies = [
     "opencv-python",
     "numpy",
@@ -35,6 +35,8 @@ classifiers = [
 dev = [
     "black",
     "pytest",
+    "build",
+    "twine",
 ]
 
 [project.urls]

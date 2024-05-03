@@ -30,20 +30,10 @@ def parse_args():
         help="Output image format, either 'same', 'png', or 'jpg'. 'jpeg' is interpreted as 'jpg'. Defaults to 'same'.",
     )
     parser.add_argument(
-        "--proc",
+        "--proc_per_stage",
         type=int,
         default=-1,
         help="Number of processes to use per stage. If set to -1, then this will be automatically determined.",
-    )
-    parser.add_argument(
-        "--dry-run",
-        action="store_true",
-        help="Set up the pipeline but do not write any files.",
-    )
-    parser.add_argument(
-        "--verbose",
-        action="store_true",
-        help="Log extra information.",
     )
 
     return parser.parse_args()
@@ -93,7 +83,7 @@ def main():
     pipeline = (
         Pipeline().read_images(input_dataset).resize(**resize_kwargs).write_images(output_dataset)
     )
-    pipeline.run(num_processes_per_stage=args.proc, verbose=args.verbose, dry_run=args.dry_run)
+    pipeline.run(num_processes_per_stage=args.proc_per_stage)
     print("Done!")
 
 

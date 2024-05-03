@@ -146,10 +146,7 @@ class Pipeline:
         if not check_permissions(self.stages[-1].dataset.root_dir):
             raise PermissionError("Cannot write to output dataset root directory!")
 
-    def run(self, num_processes_per_stage=1, verbose: bool = False, dry_run: bool = False):
-        # TODO: how should we actually handle shut-down signals? This poison pill strategy seems
-        # dubious, especially in the case where we have many workers per stage.
-        # Also, how can we dyamically shift the process distribution to optimize throughput?
+    def run(self, num_processes_per_stage=1):
         self.sanity_check()
 
         # List to keep track of processes for clean shutdown

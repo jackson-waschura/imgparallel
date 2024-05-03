@@ -2,16 +2,36 @@
 
 A toolbox for pre-processing and formatting image datasets.
 
-TODO: longer description here
+`imgparallel` is a command line interface and python library for processing image datasets stored as individual files. Currently the tool exists as an MVP, supporting very minimal transforms and limited flexibility.
 
 ## Installation
 
-TODO: Add installation instructions
+### From PyPI
+
+```
+pip install imgparallel
+```
+
+### From Source
+
+```
+git clone https://github.com/jackson-waschura/imgparallel.git
+cd imgparallel/
+pip install -e .
+```
 
 ## Examples
 
+Here is an example usage which resizes all images from `test_data/input_images` to `512x512` then saves them to `test_data/output_images` as jpegs.
+
 ```
-python3 imgparallel/cli.py --src test_data/input_images --dst test_data/output_images --resize 512x512 --format jpg --proc 1
+imgparallel --src test_data/input_images --dst test_data/output_images --resize 512x512 --format jpg --proc_per_stage 1
+```
+
+The CLI can also be invoked like this:
+
+```
+python3 imgparallel/cli.py --src test_data/input_images --dst test_data/output_images --resize 512x512 --format jpg --proc_per_stage 1
 ```
 
 ## To Do
@@ -21,7 +41,5 @@ python3 imgparallel/cli.py --src test_data/input_images --dst test_data/output_i
  - [X] Implement sanity checks / tests for permissions before running the pipeline.
  - [X] Add an alias / script into the package so it can be run by name from anywhere
  - [X] Implement tests to evaluate correctness of the tool
- - [ ] Draft a design for better two-way communication with workers using per-worker pipes/queues
- - [ ] Draft a design for more complex transforms (multiple resolution outputs, cropping, etc)
  - [ ] Use wheel and twine to publish the MVP tool
- - [ ] Implement a GUI for evaluating conversions & transforms before running
+ - [ ] Draft a design for more complex transforms (multiple resolution outputs, cropping, etc)
